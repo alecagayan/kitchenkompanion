@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kitchen Kompanion - Phase 1.2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="tablet">
+
+    <header>
+        <div class="headerContent">
+            <h1>Kitchen Kompanion</h1>
+            <img src="assets/profile.jpg" class="profilePic">
+        </div>
+    </header>
+
+    <!-- TAB 1: INVENTORY -->
+    <div id="tab1" class="screen active">
+        <h2>Inventory</h2>
+        <button onclick="openModal()">Add Item</button>
+
+        <div class="scrollArea">
+            <ul id="inventoryList"></ul>
+        </div>
+    </div>
+
+    <!-- TAB 2: SHOPPING -->
+    <div id="tab2" class="screen">
+        <h2>Shopping List</h2>
+
+        <div class="scrollArea">
+            <ul id="shoppingList"></ul>
+        </div>
+
+        <input type="text" id="shopInput" placeholder="Add item">
+        <button onclick="addShopping()">Add</button>
+    </div>
+
+    <!-- TAB 3: RECIPES -->
+    <div id="tab3" class="screen">
+        <h2>Recipes</h2>
+
+        <div class="scrollArea">
+            <ul id="recipeList"></ul>
+        </div>
+    </div>
+
+    <!-- TAB 4: OVERVIEW -->
+    <div id="tab4" class="screen">
+        <h2>Overview</h2>
+
+        <div class="scrollArea">
+            <p>This tab demonstrates scrolling behavior.</p>
+            <p>Kitchen Kompanion Phase 1.2 Prototype.</p>
+            <p>More placeholder content...</p>
+            <p>More placeholder content...</p>
+            <p>More placeholder content...</p>
+            <p>More placeholder content...</p>
+            <p>More placeholder content...</p>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <button onclick="switchTab('tab1')">Inventory</button>
+        <button onclick="switchTab('tab2')">Shopping</button>
+        <button onclick="switchTab('tab3')">Recipes</button>
+        <button onclick="switchTab('tab4')">Overview</button>
+    </nav>
+
+</div>
+
+<!-- ADD ITEM MODAL -->
+<div id="modal" class="modal">
+    <div class="modalContent">
+        <h3>Add Inventory Item</h3>
+        <input type="text" id="itemName" placeholder="Item Name">
+        <input type="number" id="itemQty" placeholder="Quantity">
+        <button onclick="addItem()">Save</button>
+        <button onclick="closeModal()">Cancel</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
