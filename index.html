@@ -1,88 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Kitchen Kompanion - Phase 1.2</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Kompanion - Phase 2 Checkpoint</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="tablet">
+        <header>
+            <div class="headerContent">
+                <div>
+                    <p class="eyebrow">Kitchen Snapshot</p>
+                    <h1>Kitchen Kompanion</h1>
+                </div>
+                <button class="profileTrigger" onclick="openProfilePage()" aria-label="Open profile">
+                    <img src="assets/SmileyFace.png" class="profilePic" alt="Profile Picture">
+                </button>
+            </div>
+        </header>
 
-<div class="tablet">
+        <main class="appBody">
+            <section id="tab1" class="screen active">
+                <div class="screenHeader">
+                    <div>
+                        <h2>Inventory</h2>
+                        <p class="screenIntro">Bigger, faster updates for what is actually in the kitchen.</p>
+                    </div>
+                    <button class="primaryButton" onclick="openModal()">Add Item</button>
+                </div>
 
-    <header>
-        <div class="headerContent">
-            <h1>Kitchen Kompanion</h1>
-            <img src="assets/profile.jpg" class="profilePic">
-        </div>
-    </header>
+                <div class="scrollArea">
+                    <ul id="inventoryList"></ul>
+                </div>
+            </section>
 
-    <!-- TAB 1: INVENTORY -->
-    <div id="tab1" class="screen active">
-        <h2>Inventory</h2>
-        <button onclick="openModal()">Add Item</button>
+            <section id="tab2" class="screen">
+                <div class="screenHeader">
+                    <div>
+                        <h2>Shopping List</h2>
+                        <p class="screenIntro">Cross off, edit, or remove items while you shop.</p>
+                    </div>
+                </div>
 
-        <div class="scrollArea">
-            <ul id="inventoryList"></ul>
+                <div class="inputRow">
+                    <input type="text" id="shopInput" placeholder="Add an item to buy">
+                    <button class="primaryButton" onclick="addShopping()">Add</button>
+                </div>
+
+                <div class="scrollArea">
+                    <ul id="shoppingList"></ul>
+                </div>
+            </section>
+
+            <section id="tab3" class="screen">
+                <div class="screenHeader">
+                    <div>
+                        <h2>Recipes</h2>
+                        <p class="screenIntro">Open a full recipe card and send missing ingredients to shopping.</p>
+                    </div>
+                    <button class="primaryButton" onclick="openAddRecipeModal()">Add Recipe</button>
+                </div>
+
+                <div class="scrollArea">
+                    <ul id="recipeList"></ul>
+                </div>
+            </section>
+        </main>
+
+        <nav class="tabBar" aria-label="App navigation">
+            <button class="tabButton active" data-target="tab1" onclick="switchTab('tab1')">
+                <span class="tabLabel">Inventory</span>
+            </button>
+            <button class="tabButton" data-target="tab2" onclick="switchTab('tab2')">
+                <span class="tabLabel">Shopping</span>
+            </button>
+            <button class="tabButton" data-target="tab3" onclick="switchTab('tab3')">
+                <span class="tabLabel">Recipes</span>
+            </button>
+        </nav>
+
+        <section id="profilePage" class="profilePage">
+            <div class="profilePageHeader">
+                <div>
+                    <p class="eyebrow profileEyebrow">Account</p>
+                    <h2>Your Profile</h2>
+                </div>
+                <button class="secondaryButton" onclick="closeProfilePage()">Back</button>
+            </div>
+            <div class="profileHero">
+                <img src="assets/SmileyFace.png" class="profileHeroPic" alt="Profile Picture">
+                <div>
+                    <h3 class="profileName">Lexi Parker</h3>
+                    <p class="profileSubtitle">Home cook tracking groceries, inventory, and weeknight meals.</p>
+                </div>
+            </div>
+            <div class="profileStats" id="profileStats"></div>
+            <div class="profileCardGrid">
+                <article class="profileCard">
+                    <h3>Kitchen Preferences</h3>
+                    <p>Household size: 2</p>
+                    <p>Default shopping store: Trader Joe's</p>
+                    <p>Favorite cooking window: Weeknight dinners</p>
+                </article>
+                <article class="profileCard" id="profileSummaryCard"></article>
+                <article class="profileCard">
+                    <h3>Profile Actions</h3>
+                    <p>Open Recipes to plan dinner.</p>
+                    <p>Use Inventory quick controls after cooking.</p>
+                    <p>Cross off Shopping items while in the store.</p>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modalContent">
+            <h3>Add Inventory Item</h3>
+            <input type="text" id="itemName" placeholder="Item name">
+            <div class="splitFields">
+                <input type="number" id="itemQty" placeholder="Amount" min="0" step="0.25">
+                <select id="itemUnit">
+                    <option value="count">count</option>
+                    <option value="lb">lb</option>
+                    <option value="oz">oz</option>
+                    <option value="cup">cup</option>
+                    <option value="loaf">loaf</option>
+                    <option value="carton">carton</option>
+                    <option value="bag">bag</option>
+                    <option value="jar">jar</option>
+                    <option value="can">can</option>
+                    <option value="box">box</option>
+                </select>
+            </div>
+            <div class="modalButtons">
+                <button class="primaryButton" onclick="addItem()">Save</button>
+                <button class="secondaryButton" onclick="closeModal()">Cancel</button>
+            </div>
         </div>
     </div>
 
-    <!-- TAB 2: SHOPPING -->
-    <div id="tab2" class="screen">
-        <h2>Shopping List</h2>
-
-        <div class="scrollArea">
-            <ul id="shoppingList"></ul>
-        </div>
-
-        <input type="text" id="shopInput" placeholder="Add item">
-        <button onclick="addShopping()">Add</button>
-    </div>
-
-    <!-- TAB 3: RECIPES -->
-    <div id="tab3" class="screen">
-        <h2>Recipes</h2>
-
-        <div class="scrollArea">
-            <ul id="recipeList"></ul>
+    <div id="recipeModal" class="modal">
+        <div class="modalContent recipeModalContent">
+            <div id="recipeCard"></div>
+            <div class="modalButtons" id="recipeModalButtons">
+                <button class="secondaryButton" onclick="closeRecipeModal()">Close</button>
+            </div>
         </div>
     </div>
 
-    <!-- TAB 4: OVERVIEW -->
-    <div id="tab4" class="screen">
-        <h2>Overview</h2>
-
-        <div class="scrollArea">
-            <p>This tab demonstrates scrolling behavior.</p>
-            <p>Kitchen Kompanion Phase 1.2 Prototype.</p>
-            <p>More placeholder content...</p>
-            <p>More placeholder content...</p>
-            <p>More placeholder content...</p>
-            <p>More placeholder content...</p>
-            <p>More placeholder content...</p>
+    <div id="addRecipeModal" class="modal">
+        <div class="modalContent recipeModalContent">
+            <h3>Add Recipe</h3>
+            <div class="splitFields">
+                <input type="text" id="recipeNameInput" placeholder="Recipe name">
+                <input type="text" id="recipeTimeInput" placeholder="Time, ex. 20 min">
+            </div>
+            <div class="splitFields">
+                <input type="number" id="recipeServingsInput" placeholder="Servings" min="1" step="1">
+                <input type="text" id="recipeIngredientFormat" value="Use: amount | unit | ingredient" readonly>
+            </div>
+            <p class="formHint">Ingredients: one per line. Example: <code>2 | oz | Cheese</code> or <code>4 | Potatoes</code> for count items.</p>
+            <textarea id="recipeIngredientsInput" rows="6" placeholder="2 | slices | Bread&#10;2 | oz | Cheese&#10;1 | tbsp | Butter"></textarea>
+            <p class="formHint">Steps: one instruction per line.</p>
+            <textarea id="recipeStepsInput" rows="6" placeholder="Butter the bread.&#10;Layer the cheese.&#10;Cook until golden."></textarea>
+            <div class="modalButtons">
+                <button class="primaryButton" onclick="addRecipe()">Save Recipe</button>
+                <button class="secondaryButton" onclick="closeAddRecipeModal()">Cancel</button>
+            </div>
         </div>
     </div>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <button onclick="switchTab('tab1')">Inventory</button>
-        <button onclick="switchTab('tab2')">Shopping</button>
-        <button onclick="switchTab('tab3')">Recipes</button>
-        <button onclick="switchTab('tab4')">Overview</button>
-    </nav>
-
-</div>
-
-<!-- ADD ITEM MODAL -->
-<div id="modal" class="modal">
-    <div class="modalContent">
-        <h3>Add Inventory Item</h3>
-        <input type="text" id="itemName" placeholder="Item Name">
-        <input type="number" id="itemQty" placeholder="Quantity">
-        <button onclick="addItem()">Save</button>
-        <button onclick="closeModal()">Cancel</button>
-    </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
